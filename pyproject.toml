@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fast-asd"
+version = "0.1.0"
+description = "Optimized, production-ready implementation of active speaker detection"
+readme = "README.md"
+authors = [
+    {name = "vid-io", email = "info@vid.io"}
+]
+license = "MIT"
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Multimedia :: Video",
+]
+keywords = ["active-speaker-detection", "talknet", "computer-vision", "audio-visual"]
+
+dependencies = [
+    "numpy>=1.21.0,<2.0.0",
+    "filterpy>=1.4.0",
+    "opencv-python>=4.6.0",
+    "scenedetect[opencv]",
+    "lap>=0.4.0",
+    "sortedcontainers",
+    "supervision",
+    "vidgear[core]",
+    "imageio[ffmpeg]",
+    "sieve-python",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "isort",
+    "flake8",
+]
+
+[project.urls]
+Homepage = "https://github.com/vid-io/fast-asd"
+Repository = "https://github.com/vid-io/fast-asd"
+Issues = "https://github.com/vid-io/fast-asd/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["fast_asd*", "talknet*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.py", "*.txt", "*.md"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+line_length = 88
