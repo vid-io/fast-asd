@@ -27,6 +27,7 @@ keywords = ["active-speaker-detection", "talknet", "computer-vision", "audio-vis
 
 dependencies = [
     "numpy>=1.21.0,<2.0.0",
+    "pydantic>=1.8.0",
     "filterpy>=1.4.0",
     "opencv-python>=4.6.0",
     "scenedetect[opencv]",

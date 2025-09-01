@@ -1,4 +1,8 @@
-import sieve
+try:
+    import sieve
+except ImportError:
+    sieve = None
+
 from pydantic import BaseModel
 from typing import List
 
@@ -12,7 +16,7 @@ class Scene(BaseModel):
     end_frame: int
 
 def scene_detection(
-    video: sieve.File,
+    video,  # sieve.File when available, otherwise string path
     threshold: float = 27.0,
     adaptive_threshold: bool = False,
 ) -> Scene:
@@ -22,17 +26,19 @@ def scene_detection(
     :param adaptive_threshold: Whether to use adaptive thresholding, which compares the difference in content between adjacent frames without a fixed threshold, and instead a rolling average of adjacent frame changes. This can help mitigate false detections in situations such as fast camera motions.
     :return: A list of scenes
     """
+    # Handle file path extraction
+    video_path = video.path if hasattr(video, 'path') else str(video)
 
     from scenedetect.detectors import ContentDetector, AdaptiveDetector
     from scenedetect.scene_manager import SceneManager
     from scenedetect.video_manager import VideoManager
 
     import cv2
-    cap = cv2.VideoCapture(video.path)
+    cap = cv2.VideoCapture(video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
     cap.release()
 
-    video_manager = VideoManager([video.path])
+    video_manager = VideoManager([video_path])
     scene_manager = SceneManager()
     if adaptive_threshold:
         scene_manager.add_detector(AdaptiveDetector())
@@ -71,3 +77,14 @@ def scene_detection(
         ).dict()
 
     video_manager.release()
+
+def get_scene_boundaries(video_path, threshold: float = 27.0, adaptive_threshold: bool = False):
+    """
+    Wrapper function to get scene boundaries from a video file.
+    
+    :param video_path: Path to the video file
+    :param threshold: Scene detection threshold
+    :param adaptive_threshold: Whether to use adaptive thresholding
+    :return: Generator yielding scene dictionaries
+    """
+    return scene_detection(video_path, threshold, adaptive_threshold)
