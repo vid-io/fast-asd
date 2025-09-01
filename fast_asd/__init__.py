@@ -9,8 +9,11 @@ active speaker detection system with face tracking.
 try:
     from .talknet import demoTalkNet
     from .talknet.talkNet import talkNet
+    _TALKNET_AVAILABLE = True
 except ImportError:
-    pass
+    _TALKNET_AVAILABLE = False
+    demoTalkNet = None
+    talkNet = None
 
 # Import main ASD components (requires sieve)
 try:
@@ -71,6 +74,9 @@ __all__ = [
     "process_speaker_detection_futures",
     "fast_asd",
 ]
+
+if _TALKNET_AVAILABLE:
+    __all__.extend(["demoTalkNet", "talkNet"])
 
 if _SCENE_DETECTION_AVAILABLE:
     __all__.append("get_scene_boundaries")

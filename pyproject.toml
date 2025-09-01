@@ -56,7 +56,7 @@ Issues = "https://github.com/vid-io/fast-asd/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["fast_asd*", "talknet*"]
+include = ["fast_asd*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.py", "*.txt", "*.md"]
