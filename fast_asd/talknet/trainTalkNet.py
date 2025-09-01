@@ -1,8 +1,8 @@
 import time, os, torch, argparse, warnings, glob
 
-from dataLoader import train_loader, val_loader
-from utils.tools import *
-from talkNet import talkNet
+from .dataLoader import train_loader, val_loader
+from .utils.tools import *
+from .talkNet import talkNet
 
 def main():
     # The structure of this code is learnt from https://github.com/clovaai/voxceleb_trainer
