@@ -84,7 +84,9 @@ class talkNet(nn.Module):
 
     def loadParameters(self, path):
         selfState = self.state_dict()
-        loadedState = torch.load(path)
+        # Load to the same device as the model to avoid device mismatch issues
+        device = next(self.model.parameters()).device
+        loadedState = torch.load(path, map_location=device)
         for name, param in loadedState.items():
             origName = name;
             if name not in selfState:
