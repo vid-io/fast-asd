@@ -35,10 +35,12 @@ dependencies = [
     "supervision",
     "vidgear[core]",
     "imageio[ffmpeg]",
-    "sieve-python",
 ]
 
 [project.optional-dependencies]
+sieve = [
+    "sieve-python",
+]
 dev = [
     "pytest",
     "black",
